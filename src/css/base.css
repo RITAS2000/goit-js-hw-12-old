@@ -224,3 +224,18 @@ body {
 .hidden {
   display: none;
 }
+.more-button {
+  display: block;
+  margin: 32px auto 44px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: #4e75ff;
+
+}

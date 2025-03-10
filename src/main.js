@@ -1,17 +1,20 @@
 import { showImg } from './js/pixabay-api.js';
-import { clearGallery } from './js/render-functions.js';
+import { clearGallery, hideLoadMoreButton } from './js/render-functions.js';
+
+export let value = '';
 
 const form = document.querySelector('.form');
 const input = document.querySelector('.input');
 
 form.addEventListener('submit', event => {
   event.preventDefault();
-  const value = input.value.trim();
+  value = input.value.trim();
 
   if (!value) {
+    hideLoadMoreButton();
     clearGallery();
     return;
-  } else {
-    showImg(value);
   }
+  input.value = '';
+  showImg(value);
 });
