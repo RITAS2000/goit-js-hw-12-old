@@ -7,22 +7,24 @@ import {
   clearGallery,
   page,
   showLoadMoreButton,
+  hideLoadMoreButton,
+  loaderHidden,
+  showLoader,
+  limitOff,
 } from './render-functions.js';
 
 const KEY = '49108574-14f3c0a22f7f392b839541c90';
 const URL = 'https://pixabay.com/api/';
 let per_page = 15;
-// export let uniqueIds = new Set();
 
 export async function showImg(value) {
-  console.log('🚀 ~ showImg ~ value:', value);
+  hideLoadMoreButton();
 
   if (page === 1) {
     clearGallery();
   }
 
-  const loader = document.querySelector('.loader');
-  loader.classList.remove('hidden');
+  showLoader();
 
   const params = {
     key: KEY,
@@ -36,13 +38,11 @@ export async function showImg(value) {
   try {
     const response = await axios.get(URL, { params });
     setTimeout(() => {
-      loader.classList.add('hidden');
+      loaderHidden();
+
       let hits = response.data.hits;
       console.log('🚀 ~ setTimeout ~ response:', response);
-
-      console.log('🚀 ~ setTimeout ~ hits:', hits);
-
-      // hits = hits.filter(hit => !uniqueIds.has(hit.id));
+      const totalHits = response.data.totalHits;
 
       if (hits.length === 0) {
         iziToast.show({
@@ -57,10 +57,12 @@ export async function showImg(value) {
         });
       } else {
         createElement(hits, page);
-
-        // hits.forEach(hit => uniqueIds.add(hit.id));
-
         showLoadMoreButton();
+        const totalLi = document.querySelectorAll('.gallery-item').length;
+        console.log('🚀 ~ setTimeout ~ totalLi:', totalLi);
+        if (totalLi >= totalHits) {
+          limitOff();
+        }
       }
     }, 1500);
   } catch (error) {

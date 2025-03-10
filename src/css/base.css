@@ -237,5 +237,8 @@ body {
   letter-spacing: 0.04em;
   color: #fff;
   background: #4e75ff;
-
+  transition: background 250ms ease-in;
+}
+.more-button:hover {
+  background: #6C8CFF;
 }
