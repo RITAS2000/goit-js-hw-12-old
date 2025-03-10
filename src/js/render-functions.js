@@ -147,11 +147,15 @@ export function showLoader() {
   const loader = document.querySelector('.loader');
   const gallery = document.querySelector('.gallery');
 
-  if (gallery.children.length > 0) {
-    loader.style.position = 'relative';
-    loader.style.marginTop = '36px';
+  if (page > 1) {
+    if (gallery.children.length > 0) {
+      loader.style.position = 'relative';
+      loader.style.marginTop = '36px';
+    }
+  } else {
+    loader.style.position = '';
+    loader.style.marginTop = '';
   }
-
   loader.classList.remove('hidden');
 }
 
