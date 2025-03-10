@@ -16,5 +16,6 @@ form.addEventListener('submit', event => {
     return;
   }
   input.value = '';
+  clearGallery();
   showImg(value);
 });
