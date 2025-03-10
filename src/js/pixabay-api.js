@@ -35,13 +35,14 @@ export async function showImg(value) {
     page: page,
     per_page: per_page,
   };
+
   try {
     const response = await axios.get(URL, { params });
     setTimeout(() => {
       loaderHidden();
 
       let hits = response.data.hits;
-      console.log('🚀 ~ setTimeout ~ response:', response);
+
       const totalHits = response.data.totalHits;
 
       if (hits.length === 0) {
@@ -57,16 +58,26 @@ export async function showImg(value) {
         });
       } else {
         createElement(hits, page);
+
         showLoadMoreButton();
+
         const totalLi = document.querySelectorAll('.gallery-item').length;
-        console.log('🚀 ~ setTimeout ~ totalLi:', totalLi);
         if (totalLi >= totalHits) {
           limitOff();
+        }
+
+        if (page > 1) {
+          const galleryItem = document.querySelector('.gallery-item');
+          const cardHeight = galleryItem.getBoundingClientRect().height;
+          window.scrollBy({
+            top: cardHeight * 2,
+            behavior: 'smooth',
+          });
         }
       }
     }, 1500);
   } catch (error) {
-    loader.classList.add('hidden');
+    loaderHidden();
 
     if (error.response) {
       iziToast.show({
@@ -77,6 +88,7 @@ export async function showImg(value) {
         position: 'topRight',
         color: '#ef4040',
         iconUrl: iconError,
+        maxWidth: '432px',
         timeout: 3000,
       });
     } else if (error.request) {
@@ -88,6 +100,7 @@ export async function showImg(value) {
         position: 'topRight',
         color: '#ef4040',
         iconUrl: iconError,
+        maxWidth: '432px',
         timeout: 3000,
       });
     } else {
@@ -99,6 +112,7 @@ export async function showImg(value) {
         position: 'topRight',
         color: '#ef4040',
         iconUrl: iconError,
+        maxWidth: '432px',
         timeout: 3000,
       });
     }

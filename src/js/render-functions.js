@@ -94,13 +94,12 @@ export function createElement(hits, page) {
   gallery.append(...galleryElements);
 
   if (!window.lightbox) {
-    // Якщо lightbox ще не ініціалізований
     window.lightbox = new SimpleLightbox('.gallery a', {
       captionsData: 'alt',
       captionDelay: 250,
     });
   } else {
-    window.lightbox.refresh(); // Оновлюємо Lightbox після додавання нових елементів
+    window.lightbox.refresh();
   }
 }
 
