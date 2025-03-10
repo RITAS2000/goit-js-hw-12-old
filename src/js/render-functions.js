@@ -8,8 +8,6 @@ import iconOh from '../img/oh.svg';
 
 export let page = 1;
 
-const gallery = document.querySelector('.gallery');
-
 export function createElement(hits, page) {
   const gallery = document.querySelector('.gallery');
   if (page === 1) {
@@ -108,34 +106,27 @@ export function clearGallery() {
   gallery.innerHTML = '';
 }
 
-export function createButtonLoad() {
-  const buttonLoad = document.createElement('button');
-  buttonLoad.textContent = ' Load more';
-  buttonLoad.classList.add('more-button');
-  return buttonLoad;
-}
-
 export function showLoadMoreButton() {
   let buttonLoadMore = document.querySelector('.more-button');
+  buttonLoadMore.style.display = 'block';
+  if (!buttonLoadMore.dataset.listener) {
+    buttonLoadMore.addEventListener('click', () => {
+      page += 1;
+      showImg(value, page);
+    });
 
-  if (buttonLoadMore) return;
-  buttonLoadMore = createButtonLoad();
-
-  gallery.insertAdjacentElement('afterend', buttonLoadMore);
-
-  buttonLoadMore.addEventListener('click', () => {
-    page += 1;
-    showImg(value, page);
-  });
+    buttonLoadMore.dataset.listener = 'true';
+  }
 }
 
 export function hideLoadMoreButton() {
   const buttonLoadMore = document.querySelector('.more-button');
   if (buttonLoadMore) {
-    buttonLoadMore.remove();
+    buttonLoadMore.style.display = 'none';
   }
 }
 
+hideLoadMoreButton();
 export function loaderHidden() {
   const loader = document.querySelector('.loader');
   if (loader) {
@@ -146,6 +137,7 @@ export function loaderHidden() {
 export function showLoader() {
   const loader = document.querySelector('.loader');
   const gallery = document.querySelector('.gallery');
+  const buttonLoadMore = document.querySelector('.more-button');
 
   if (page > 1) {
     if (gallery.children.length > 0) {
@@ -155,6 +147,9 @@ export function showLoader() {
   } else {
     loader.style.position = '';
     loader.style.marginTop = '';
+  }
+  if (buttonLoadMore) {
+    buttonLoadMore.style.display = 'none';
   }
   loader.classList.remove('hidden');
 }
@@ -170,6 +165,7 @@ export function limitOff() {
     timeout: 3000,
   });
 }
+
 export function resetPage() {
   page = 1;
 }

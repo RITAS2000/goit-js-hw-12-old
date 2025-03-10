@@ -1,9 +1,5 @@
 import { showImg } from './js/pixabay-api.js';
-import {
-  clearGallery,
-  hideLoadMoreButton,
-  resetPage,
-} from './js/render-functions.js';
+import { clearGallery, resetPage } from './js/render-functions.js';
 
 export let value = '';
 
@@ -15,7 +11,6 @@ form.addEventListener('submit', event => {
   value = input.value.trim();
 
   if (!value) {
-    hideLoadMoreButton();
     clearGallery();
     return;
   }
