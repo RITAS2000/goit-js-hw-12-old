@@ -166,3 +166,6 @@ export function limitOff() {
     timeout: 3000,
   });
 }
+export function resetPage() {
+  page = 1;
+}

@@ -1,5 +1,9 @@
 import { showImg } from './js/pixabay-api.js';
-import { clearGallery, hideLoadMoreButton } from './js/render-functions.js';
+import {
+  clearGallery,
+  hideLoadMoreButton,
+  resetPage,
+} from './js/render-functions.js';
 
 export let value = '';
 
@@ -16,6 +20,7 @@ form.addEventListener('submit', event => {
     return;
   }
   input.value = '';
+  resetPage();
   clearGallery();
   showImg(value);
 });
